@@ -1,2 +1,1 @@
-﻿Console.WriteLine("Hello");
-Console.ReadKey();
+﻿Console.WriteLine("Hello Word");

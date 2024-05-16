@@ -28,35 +28,9 @@ namespace Layer.Domain.Migrator
         {
             var databaseName = GetDatabaseName(connectionString);
             string masterConnectionString = ChangeDatabaseName(connectionString, "master");
-            var commandScript =
-                $@"USE [{databaseName}]
-                   IF (Not Exists (SELECT sl.name  
-                                   FROM sys.sysusers su
-                   	               join sys.syslogins sl on sl.sid = su.sid
-                                   WHERE sl.name  = 'WHT_Admin_EVERST'))
-                   Begin
-                   	use [master]
-                   	
-                   	BEGIN TRY  
-                   		CREATE LOGIN [WHT_Admin_EVERST] WITH PASSWORD=N'$ep!D_P$w', DEFAULT_DATABASE=[master], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF
-                   		ALTER SERVER ROLE [sysadmin] ADD MEMBER [WHT_Admin_EVERST]
-                   	END TRY  
-                   	BEGIN CATCH  
-                   		ALTER SERVER ROLE [sysadmin] ADD MEMBER [WHT_Admin_EVERST]
-                   	END CATCH 
-                   
-                   	ALTER SERVER ROLE [sysadmin] ADD MEMBER [WHT_Admin_EVERST]
-                   	use [master];
-                   	USE [{databaseName}]
-                   	CREATE USER [WHT_Admin_EVERST] FOR LOGIN [WHT_Admin_EVERST]
-                   	USE [{databaseName}]
-                   	ALTER ROLE [db_owner] ADD MEMBER [WHT_Admin_EVERST]
-                   	Print N'Created User WHT_Admin_EVERST'
-                   End
-                   use [master]";
-
+           
             using var connection = new SqlConnection(masterConnectionString);
-            using var command = new SqlCommand(commandScript, connection);
+            using var command = new SqlCommand();
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();

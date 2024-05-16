@@ -1,0 +1,23 @@
+﻿@model Layer.Domian.Entities.DB.Users.UserEntity
+
+<form asp-controller="Home" asp-action="Edit" method="post">
+    <div class="row">
+        <div class="col-lg-12">
+            <label class="form-label my-2">Name </label>
+            <input type="text" class="form-control" asp-for="Name" />
+        </div>
+        <div class="col-lg-12">
+            <label class="form-label my-2">Username </label>
+            <input type="text" class="form-control" asp-for="UserName" />
+        </div>
+        <div class="col-lg-12">
+            <label class="form-label my-2">Password </label>
+            <input type="text" class="form-control" asp-for="Password" />
+        </div>
+        <div class="col-lg-12">
+
+            <input type="submit" class="btn btn-success w-25 mt-3" value="Submit" />
+        </div>
+
+    </div>
+</form>
